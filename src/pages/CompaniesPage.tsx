@@ -4,6 +4,7 @@ import fetchService from "../services/fetchCompanies";
 import CompanyCard from "../components/CompanyCard";
 import FilterBar from "../components/FilterBar";
 import Loader from "../components/Loader";
+import { useDebounce } from "../hooks/useDebounce";
 
 type SortOption =
   | "name-asc"
@@ -23,6 +24,8 @@ const CompaniesPage: React.FC = () => {
   const [search, setSearch] = useState("");
   const [industry, setIndustry] = useState("");
   const [sort, setSort] = useState<SortOption>("");
+
+  const debouncedSearch = useDebounce(search, 300);
 
   useEffect(() => {
     let mounted = true;
@@ -57,7 +60,7 @@ const CompaniesPage: React.FC = () => {
 
   // Apply search, industry filter
   const filtered = useMemo(() => {
-    const s = search.trim().toLowerCase();
+    const s = debouncedSearch.trim().toLowerCase();
     let items = allCompanies.slice();
 
     if (s) {
@@ -78,7 +81,7 @@ const CompaniesPage: React.FC = () => {
       items.sort((a, b) => (b.employees ?? 0) - (a.employees ?? 0));
 
     return items;
-  }, [allCompanies, search, industry, sort]);
+  }, [allCompanies, debouncedSearch, industry, sort]);
 
   // pagination (client-side pagination over filtered results)
   const [page, setPage] = useState(1);
@@ -86,7 +89,7 @@ const CompaniesPage: React.FC = () => {
   // reset page when filters change
   useEffect(() => {
     setPage(1);
-  }, [search, industry, sort]);
+  }, [debouncedSearch, industry, sort]);
 
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
@@ -122,15 +125,6 @@ const CompaniesPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-      {/* <header className="mb-4">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-          Companies Directory
-        </h1>
-        <p className="text-sm text-gray-600">
-          Browse companies — search, filter, sort. Use pagination to navigate
-          results.
-        </p>
-      </header> */}
       <header className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           {/* Left Text */}

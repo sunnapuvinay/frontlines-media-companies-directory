@@ -1,10 +1,12 @@
+import React from 'react'
+import CompaniesPage from './pages/CompaniesPage'
 
-const App = () =>{
+const App: React.FC = () => {
   return (
-    <div>
-      <h1 className="text-red-400 text-2xl font-extrabold">Frontlines Media</h1>
+    <div className="min-h-screen bg-gray-50">
+      <CompaniesPage />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

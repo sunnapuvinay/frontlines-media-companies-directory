@@ -172,7 +172,6 @@ const CompaniesPage: React.FC = () => {
       </div>
 
       <div className="mt-8 mb-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Showing count */}
         <div className="text-sm text-gray-600 tracking-wide">
           Showing{" "}
           <span className="font-semibold text-gray-900">
@@ -246,7 +245,7 @@ const CompaniesPage: React.FC = () => {
         </div>
       </div>
 
-      <section>
+      <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 mt-8">
         {displayed.length === 0 ? (
           <div className="p-8 text-center text-gray-600">
             <p className="text-lg font-medium">No companies found</p>

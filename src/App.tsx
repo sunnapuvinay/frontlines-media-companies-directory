@@ -1,23 +1,12 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-const App = () =>{
+import React from 'react'
+import CompaniesPage from './pages/CompaniesPage'
 
-useEffect(() => {
-    axios.get('/companies.json')
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the data!', error);
-      });
-  }, []);
-
-
+const App: React.FC = () => {
   return (
-    <div>
-      <h1 className="text-red-400 text-2xl font-extrabold">Frontlines Media</h1>
+    <div className="min-h-screen bg-gray-50">
+      <CompaniesPage />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

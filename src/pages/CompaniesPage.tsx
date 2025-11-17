@@ -127,7 +127,6 @@ const CompaniesPage: React.FC = () => {
     <div className="max-w-7xl mx-auto p-4">
       <header className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          {/* Left Text */}
           <div>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
               Companies Directory
@@ -137,8 +136,6 @@ const CompaniesPage: React.FC = () => {
               Discover leading companies shaping Hyderabad’s growth and innovation landscape
             </p>
           </div>
-
-          {/* Decorative Badge */}
           <div
             className="
       mt-2 sm:mt-0 inline-flex items-center gap-2 

@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
-/* Blue Accent Scrollbar (Recommended) */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f4f6; /* gray-100 */
+  background: #f3f4f6;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6; /* blue-500 */
+  background: #3b82f6;
   border-radius: 10px;
-  border: 2px solid #e5e7eb; /* gray-200 */
+  border: 2px solid #e5e7eb;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb; /* blue-600 */
+  background: #2563eb;
 }

@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { CustomSelect } from "./CustomSelect";
 
 type SortOption =
   | "name-asc"
@@ -6,6 +7,43 @@ type SortOption =
   | "employees-asc"
   | "employees-desc"
   | "";
+
+const SORT_OPTIONS = [
+  "Name A → Z",
+  "Name Z → A",
+  "Employees ↑",
+  "Employees ↓",
+];
+
+const sortLabelToValue = (label: string): SortOption => {
+  switch (label) {
+    case "Name A → Z":
+      return "name-asc";
+    case "Name Z → A":
+      return "name-desc";
+    case "Employees ↑":
+      return "employees-asc";
+    case "Employees ↓":
+      return "employees-desc";
+    default:
+      return "";
+  }
+};
+
+const sortValueToLabel = (value: SortOption): string => {
+  switch (value) {
+    case "name-asc":
+      return "Name A → Z";
+    case "name-desc":
+      return "Name Z → A";
+    case "employees-asc":
+      return "Employees ↑";
+    case "employees-desc":
+      return "Employees ↓";
+    default:
+      return "Sort";
+  }
+};
 
 type Props = {
   search: string;
@@ -26,7 +64,7 @@ export const FilterBar: React.FC<Props> = ({
   sort,
   setSort,
 }) => {
-  const industryOptions = useMemo(() => ["All", ...industries], [industries]);
+  const industryOptions = useMemo(() => industries, [industries]);
 
   return (
     <div className="w-full bg-white p-5 rounded-xl shadow-md border border-gray-100">
@@ -43,7 +81,7 @@ export const FilterBar: React.FC<Props> = ({
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search companies by name..."
+            placeholder="Search companies by name or industry..."
             className="
           w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 
           bg-gray-50 focus:bg-white
@@ -54,56 +92,24 @@ export const FilterBar: React.FC<Props> = ({
         </div>
 
         {/* Industry Filter */}
-        <div className="relative">
-          <label className="sr-only">Industry</label>
-
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            🏭
-          </span>
-
-          <select
-            value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            className="
-          w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 
-          bg-gray-50 focus:bg-white
-          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 
-          cursor-pointer text-sm transition-all
-        "
-          >
-            {industryOptions.map((opt) => (
-              <option key={opt} value={opt === "All" ? "" : opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </div>
+        <CustomSelect
+          value={industry}
+          onChange={setIndustry}
+          options={industryOptions}
+          label="Industry"
+          icon="🏭"
+          onClear={() => setIndustry("")}
+        />
 
         {/* Sorting */}
-        <div className="relative">
-          <label className="sr-only">Sort</label>
-
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            🗂️
-          </span>
-
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortOption)}
-            className="
-          w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 
-          bg-gray-50 focus:bg-white
-          focus:border-blue-400 focus:ring-2 focus:ring-blue-200 
-          cursor-pointer text-sm transition-all
-        "
-          >
-            <option value="">Sort</option>
-            <option value="name-asc">Name A → Z</option>
-            <option value="name-desc">Name Z → A</option>
-            <option value="employees-asc">Employees ↑</option>
-            <option value="employees-desc">Employees ↓</option>
-          </select>
-        </div>
+        <CustomSelect
+          value={sortValueToLabel(sort)}
+          onChange={(label) => setSort(sortLabelToValue(label))}
+          options={SORT_OPTIONS}
+          label="Sort"
+          icon="🗂️"
+          onClear={() => setSort("")}
+        />
       </div>
 
       {/* Filter Summary */}

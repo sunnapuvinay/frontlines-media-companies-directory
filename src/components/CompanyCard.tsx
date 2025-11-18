@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Company } from "../types/Company";
 import React from "react";
 import Logo from "../assets/frontline_logo.webp";
@@ -7,6 +8,7 @@ type Props = {
 };
 
 export const CompanyCard: React.FC<Props> = ({ company }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
   return (
     <article
       className="
@@ -17,12 +19,14 @@ export const CompanyCard: React.FC<Props> = ({ company }) => {
       <div className="relative h-44 w-full overflow-hidden group">
         {company.image ? (
           <img
-            className="
-              w-full h-full object-cover transition-transform duration-500 
-              group-hover:scale-110
-            "
             src={company.image}
             alt={company.name}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setImgLoaded(true)}
+            className={`w-full h-full object-cover transition-opacity duration-500 ease-out ${
+              imgLoaded ? "opacity-100" : "opacity-0"
+            }`}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">

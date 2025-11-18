@@ -43,7 +43,7 @@ export const FilterBar: React.FC<Props> = ({
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search companies by name..."
+            placeholder="Search companies by name or industry..."
             className="
           w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 
           bg-gray-50 focus:bg-white
